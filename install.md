@@ -10,8 +10,8 @@
 
     ```bash
     cd /opt/
-    git clone https://github.com/joaofaria/jumpserver-v3.10.9.git
-    cd jumpserver-v3.10.9
+    git clone (https://github.com/JackExperts/gita-jumpserver.git)
+    cd gita-jumpserver
     ```
 
 3. **Remova arquivos existentes e baixe os arquivos de GeoIP necessários:**
@@ -48,7 +48,7 @@
 6. **Instale o Poetry para gerenciar as dependências do Python:**
 
     ```bash
-    cd jumpserver-v3.10.9/
+    cd gita-jumpserver/
     pip install poetry==1.8.2
     ```
 
