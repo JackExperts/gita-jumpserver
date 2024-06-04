@@ -10,7 +10,7 @@
 
     ```bash
     cd /opt/
-    git clone (https://github.com/JackExperts/gita-jumpserver.git)
+    git clone https://github.com/JackExperts/gita-jumpserver.git
     cd gita-jumpserver
     ```
 
