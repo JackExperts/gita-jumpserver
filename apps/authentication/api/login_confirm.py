@@ -9,7 +9,6 @@ from common.utils import get_logger
 from .. import errors, mixins
 
 __all__ = ['TicketStatusApi']
-
 logger = get_logger(__name__)
 
 

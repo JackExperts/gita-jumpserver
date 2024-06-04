@@ -16,7 +16,9 @@ i18n:
     en: Chrome Browser
     zh: Chrome 浏览器
     ja: Chrome ブラウザ
+    pt: Navegador Chrome
   Chrome Browser Open URL Page Address:
     en: Chrome Browser Open URL Page Address
     zh: Chrome 浏览器打开网页地址
     ja: Chrome ブラウザでウェブページを開く
+    pt: Abrir endereço da página URL no navegador Chrome

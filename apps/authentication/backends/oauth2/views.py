@@ -4,13 +4,10 @@ from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.http import urlencode
-from django.utils.translation import gettext_lazy as _
 
 from authentication.utils import build_absolute_uri
-from authentication.views.mixins import FlashMessageMixin
-from authentication.mixins import authenticate
 from common.utils import get_logger
-
+from authentication.mixins import authenticate
 
 logger = get_logger(__file__)
 
@@ -42,7 +39,7 @@ class OAuth2AuthRequestView(View):
         return HttpResponseRedirect(redirect_url)
 
 
-class OAuth2AuthCallbackView(View, FlashMessageMixin):
+class OAuth2AuthCallbackView(View):
     http_method_names = ['get', ]
 
     def get(self, request):
@@ -54,11 +51,6 @@ class OAuth2AuthCallbackView(View, FlashMessageMixin):
         if 'code' in callback_params:
             logger.debug(log_prompt.format('Process authenticate'))
             user = authenticate(code=callback_params['code'], request=request)
-
-            if err_msg := getattr(request, 'error_message', ''):
-                login_url = reverse('authentication:login') + '?admin=1'
-                return self.get_failed_response(login_url, title=_('Authentication failed'), msg=err_msg)
-
             if user and user.is_valid:
                 logger.debug(log_prompt.format('Login: {}'.format(user)))
                 auth.login(self.request, user)

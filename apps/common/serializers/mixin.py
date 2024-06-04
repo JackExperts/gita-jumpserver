@@ -5,7 +5,6 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 10:
     from collections.abc import Iterable
 else:
     from collections import Iterable
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import NOT_PROVIDED
 from django.utils.translation import gettext_lazy as _
@@ -265,14 +264,6 @@ class SizedModelFieldsMixin(BaseDynamicFieldsPlugin):
         return fields_to_drop
 
 
-class XPACKModelFieldsMixin(BaseDynamicFieldsPlugin):
-    def get_exclude_field_names(self):
-        if settings.XPACK_LICENSE_IS_VALID:
-            return set()
-        fields_xpack = set(getattr(self.serializer.Meta, 'fields_xpack', set()))
-        return fields_xpack
-
-
 class DefaultValueFieldsMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -311,7 +302,7 @@ class DynamicFieldsMixin:
     """
     可以控制显示不同的字段，mini 最少，small 不包含关系
     """
-    dynamic_fields_plugins = [QueryFieldsMixin, SizedModelFieldsMixin, XPACKModelFieldsMixin]
+    dynamic_fields_plugins = [QueryFieldsMixin, SizedModelFieldsMixin]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -92,12 +92,6 @@ class UserLoginContextMixin:
                 'logo': static('img/login_feishu_logo.png')
             },
             {
-                'name': 'Lark',
-                'enabled': settings.AUTH_LARK,
-                'url': reverse('authentication:lark-qr-login'),
-                'logo': static('img/login_lark_logo.png')
-            },
-            {
                 'name': _('Slack'),
                 'enabled': settings.AUTH_SLACK,
                 'url': reverse('authentication:slack-qr-login'),
@@ -116,12 +110,12 @@ class UserLoginContextMixin:
     def get_support_langs():
         langs = [
             {
-                'title': '中文(简体)',
-                'code': 'zh-hans'
+                'title': 'Português (Brasil)',
+                'code': 'pt'
             },
             {
-                'title': '中文(繁體)',
-                'code': 'zh-hant'
+                'title': '中文(简体)',
+                'code': 'zh-hans'
             },
             {
                 'title': 'English',
@@ -418,3 +412,4 @@ class UserLogoutView(TemplateView):
         }
         kwargs.update(context)
         return super().get_context_data(**kwargs)
+

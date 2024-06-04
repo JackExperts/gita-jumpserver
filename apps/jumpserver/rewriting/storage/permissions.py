@@ -4,7 +4,7 @@ path_perms_map = {
     'xpack': '*',
     'settings': '*',
     'img': '*',
-    'replay': 'terminal.view_sessionreplay',
+    'replay': 'default',
     'applets': 'terminal.view_applet',
     'virtual_apps': 'terminal.view_virtualapp',
     'playbooks': 'ops.view_playbook'

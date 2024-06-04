@@ -118,14 +118,9 @@ class DateTimeMixin:
         return self.get_logs_queryset_filter(qs, 'date_start')
 
     @lazyproperty
-    def command_type_queryset_tuple(self):
-        type_queryset_tuple = Command.get_all_type_queryset_tuple()
-        return (
-            (tp, self.get_logs_queryset_filter(
-                qs, 'timestamp', is_timestamp=True
-            ))
-            for tp, qs in type_queryset_tuple
-        )
+    def command_queryset(self):
+        qs = Command.objects.all()
+        return self.get_logs_queryset_filter(qs, 'timestamp', is_timestamp=True)
 
     @lazyproperty
     def job_logs_queryset(self):
@@ -136,7 +131,7 @@ class DateTimeMixin:
 class DatesLoginMetricMixin:
     dates_list: list
     date_start_end: tuple
-    command_type_queryset_tuple: tuple
+    command_queryset: Command.objects
     sessions_queryset: Session.objects
     ftp_logs_queryset: FTPLog.objects
     job_logs_queryset: JobLog.objects
@@ -235,28 +230,12 @@ class DatesLoginMetricMixin:
         return self.password_change_logs_queryset.count()
 
     @lazyproperty
-    def command_statistics(self):
-        from terminal.const import CommandStorageType
-        total_amount = 0
-        danger_amount = 0
-        for tp, qs in self.command_type_queryset_tuple:
-            if tp == CommandStorageType.es:
-                total_amount += qs.count(limit_to_max_result_window=False)
-                danger_amount += qs.filter(risk_level=RiskLevelChoices.reject).count(limit_to_max_result_window=False)
-            else:
-                total_amount += qs.count()
-                danger_amount += qs.filter(risk_level=RiskLevelChoices.reject).count()
-        return total_amount, danger_amount
-
-    @lazyproperty
     def commands_amount(self):
-        total_amount, __ = self.command_statistics
-        return total_amount
+        return self.command_queryset.count()
 
     @lazyproperty
     def commands_danger_amount(self):
-        __, danger_amount = self.command_statistics
-        return danger_amount
+        return self.command_queryset.filter(risk_level=RiskLevelChoices.reject).count()
 
     @lazyproperty
     def job_logs_running_amount(self):

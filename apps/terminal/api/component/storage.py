@@ -11,7 +11,6 @@ from rest_framework.response import Response
 
 from common.const.http import GET
 from common.drf.filters import BaseFilterSet
-from common.api.mixin import CommonApiMixin
 from terminal import const
 from terminal.filters import CommandStorageFilter, CommandFilter, CommandFilterForStorageTree
 from terminal.models import CommandStorage, ReplayStorage
@@ -23,7 +22,7 @@ __all__ = [
 ]
 
 
-class BaseStorageViewSetMixin(CommonApiMixin):
+class BaseStorageViewSetMixin:
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

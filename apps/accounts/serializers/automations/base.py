@@ -21,7 +21,6 @@ __all__ = [
 class BaseAutomationSerializer(PeriodTaskSerializerMixin, BulkOrgResourceModelSerializer):
     assets = ObjectRelatedField(many=True, required=False, queryset=Asset.objects, label=_('Assets'))
     nodes = ObjectRelatedField(many=True, required=False, queryset=Node.objects, label=_('Nodes'))
-    is_periodic = serializers.BooleanField(default=False, required=False, label=_("Periodic perform"))
 
     class Meta:
         read_only_fields = [

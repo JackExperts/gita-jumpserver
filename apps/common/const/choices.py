@@ -31,5 +31,6 @@ COUNTRY_CALLING_CODES = [
     {'name': 'Britain(Britain)', 'value': '+44'},
     {'name': 'Germany(Deutschland)', 'value': '+49'},
     {'name': 'Japan(日本)', 'value': '+81'}, {'name': 'Korea(한국)', 'value': '+82'},
-    {'name': 'India(भारत)', 'value': '+91'}
+    {'name': 'India(भारत)', 'value': '+91'},
+    {'name': 'Brasil', 'value': '+55'}, 
 ]

@@ -3,8 +3,8 @@
 import requests
 import sys
 
-admin_username = 'admin'
-admin_password = 'admin'
+admin_username = 'jumpserver'
+admin_password = 'Wo6ri8je'
 domain_url = 'http://localhost:8080'
 
 

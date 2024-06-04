@@ -12,7 +12,9 @@ from django.utils.translation import gettext_lazy as _
 
 from common.storage.replay import ReplayStorageHandler
 from ops.celery.decorator import (
-    register_as_period_task, after_app_ready_start)
+    register_as_period_task, after_app_ready_start,
+    after_app_shutdown_clean_periodic
+)
 from orgs.utils import tmp_to_builtin_org
 from orgs.utils import tmp_to_root_org
 from .backends import server_replay_storage
@@ -31,6 +33,7 @@ logger = get_task_logger(__name__)
 @shared_task(verbose_name=_('Periodic delete terminal status'))
 @register_as_period_task(interval=3600)
 @after_app_ready_start
+@after_app_shutdown_clean_periodic
 def delete_terminal_status_period():
     yesterday = timezone.now() - datetime.timedelta(days=7)
     Status.objects.filter(date_created__lt=yesterday).delete()
@@ -39,6 +42,7 @@ def delete_terminal_status_period():
 @shared_task(verbose_name=_('Clean orphan session'))
 @register_as_period_task(interval=600)
 @after_app_ready_start
+@after_app_shutdown_clean_periodic
 @tmp_to_root_org()
 def clean_orphan_session():
     active_sessions = Session.objects.filter(is_finished=False)
@@ -87,10 +91,10 @@ def upload_session_replay_to_external_storage(session_id):
     verbose_name=_('Run applet host deployment'),
     activity_callback=lambda self, did, *args, **kwargs: ([did],)
 )
-def run_applet_host_deployment(did, install_applets):
+def run_applet_host_deployment(did):
     with tmp_to_builtin_org(system=1):
         deployment = AppletHostDeployment.objects.get(id=did)
-        deployment.start(install_applets=install_applets)
+        deployment.start()
 
 
 @shared_task(
@@ -102,17 +106,6 @@ def run_applet_host_deployment_install_applet(ids, applet_id):
         for did in ids:
             deployment = AppletHostDeployment.objects.get(id=did)
             deployment.install_applet(applet_id)
-
-
-@shared_task(
-    verbose_name=_('Uninstall applet'),
-    activity_callback=lambda self, ids, applet_id, *args, **kwargs: (ids,)
-)
-def run_applet_host_deployment_uninstall_applet(ids, applet_id):
-    with tmp_to_builtin_org(system=1):
-        for did in ids:
-            deployment = AppletHostDeployment.objects.get(id=did)
-            deployment.uninstall_applet(applet_id)
 
 
 @shared_task(

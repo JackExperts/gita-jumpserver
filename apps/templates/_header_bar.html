@@ -36,6 +36,8 @@
                     <i class="fa fa-globe"></i>
                     {% if request.COOKIES.django_language == 'en' %}
                         <span class="m-r-sm text-muted welcome-message">English<b class="caret"></b></span>
+                    {% else if request.COOKIES.django_language == 'pt' %}
+                        <span class="m-r-sm text-muted welcome-message">Português (Brasil)<b class="caret"></b></span>
                     {% else %}
                         <span class="m-r-sm text-muted welcome-message">中文<b class="caret"></b></span>
                     {% endif %}
@@ -43,21 +45,21 @@
 
                 <ul class="dropdown-menu animated fadeInRight m-t-xs profile-dropdown">
                     <li>
-                        <a id="switch_cn" href="{% url 'i18n-switch' lang='zh-hans' %}">
+                        <a id="switch_cn" href="{% url 'i18n-switch' lang='' %}">
                             <i class="fa fa-flag"></i>
                             <span> 中文</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="switch_hant" href="{% url 'i18n-switch' lang='zh-hant' %}">
-                            <i class="fa fa-flag"></i>
-                            <span> 中文(繁體)</span>
                         </a>
                     </li>
                     <li>
                         <a id="switch_en" href="{% url 'i18n-switch' lang='en' %}">
                             <i class="fa fa-flag-checkered"></i>
                             <span> English</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="switch_pt" href="{% url 'i18n-switch' lang='pt' %}">
+                            <i class="fa fa-flag-checkered"></i>
+                            <span> Português (Brasil)</span>
                         </a>
                     </li>
                      <li>
@@ -144,3 +146,6 @@ $(document).ready(function () {
         }, 100);
     })
 </script>
+
+
+

@@ -11,3 +11,4 @@ i18n:
     zh: 使用 Ansible 模块 win_user 删除账号
     ja: Ansible モジュール win_user を使用してアカウントを削除する
     en: Use the Ansible module win_user to delete an account
+    pt: 'Usar o módulo Ansible win_user para excluir uma conta'

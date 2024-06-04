@@ -3,7 +3,6 @@
 import base64
 import json
 import logging
-from collections import defaultdict
 
 from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured
@@ -13,7 +12,6 @@ from rest_framework import filters
 from rest_framework.compat import coreapi, coreschema
 from rest_framework.fields import DateTimeField
 from rest_framework.serializers import ValidationError
-from rest_framework.filters import OrderingFilter
 
 from common import const
 from common.db.fields import RelatedManager
@@ -25,7 +23,6 @@ __all__ = [
     'IDInFilterBackend', "CustomFilterBackend",
     "BaseFilterSet", 'IDNotFilterBackend',
     'NotOrRelFilterBackend', 'LabelFilterBackend',
-    'RewriteOrderingFilter'
 ]
 
 
@@ -183,7 +180,7 @@ class LabelFilterBackend(filters.BaseFilterBackend):
         ]
 
     @staticmethod
-    def parse_labels(labels_id):
+    def parse_label_ids(labels_id):
         from labels.models import Label
         label_ids = [i.strip() for i in labels_id.split(',')]
         cleaned = []
@@ -204,8 +201,8 @@ class LabelFilterBackend(filters.BaseFilterBackend):
             q = Q()
             for kwarg in args:
                 q |= Q(**kwarg)
-            labels = Label.objects.filter(q)
-            cleaned.extend(list(labels))
+            ids = Label.objects.filter(q).values_list('id', flat=True)
+            cleaned.extend(list(ids))
         return cleaned
 
     def filter_queryset(self, request, queryset, view):
@@ -224,23 +221,13 @@ class LabelFilterBackend(filters.BaseFilterBackend):
         app_label = model._meta.app_label
         model_name = model._meta.model_name
 
-        full_resources = labeled_resource_cls.objects.filter(
+        resources = labeled_resource_cls.objects.filter(
             res_type__app_label=app_label, res_type__model=model_name,
         )
-        labels = self.parse_labels(labels_id)
-        grouped = defaultdict(set)
-        for label in labels:
-            grouped[label.name].add(label.id)
-
-        matched_ids = set()
-        for name, label_ids in grouped.items():
-            resources = model.filter_resources_by_labels(full_resources, label_ids, rel='any')
-            res_ids = resources.values_list('res_id', flat=True)
-            if not matched_ids:
-                matched_ids = set(res_ids)
-            else:
-                matched_ids &= set(res_ids)
-        queryset = queryset.filter(id__in=matched_ids)
+        label_ids = self.parse_label_ids(labels_id)
+        resources = model.filter_resources_by_labels(resources, label_ids)
+        res_ids = resources.values_list('res_id', flat=True)
+        queryset = queryset.filter(id__in=set(res_ids))
         return queryset
 
 
@@ -337,17 +324,3 @@ class NotOrRelFilterBackend(filters.BaseFilterBackend):
             queryset.query.where.connector = 'OR'
         queryset._result_cache = None
         return queryset
-
-
-class RewriteOrderingFilter(OrderingFilter):
-    default_ordering_if_has = ('name', )
-
-    def get_default_ordering(self, view):
-        ordering = super().get_default_ordering(view)
-        # 如果 view.ordering = [] 表示不排序, 这样可以节约性能 (比如: 用户授权的资产)
-        if ordering is not None:
-            return ordering
-        ordering_fields = getattr(view, 'ordering_fields', self.ordering_fields)
-        if ordering_fields:
-            ordering = tuple([f for f in ordering_fields if f in self.default_ordering_if_has])
-        return ordering

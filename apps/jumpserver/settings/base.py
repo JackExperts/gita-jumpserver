@@ -38,8 +38,7 @@ BASE_DIR = const.BASE_DIR
 PROJECT_DIR = const.PROJECT_DIR
 APPS_DIR = os.path.join(PROJECT_DIR, 'apps')
 DATA_DIR = os.path.join(PROJECT_DIR, 'data')
-SHARE_DIR = os.path.join(DATA_DIR, 'share')
-ANSIBLE_DIR = os.path.join(SHARE_DIR, 'ansible')
+ANSIBLE_DIR = os.path.join(DATA_DIR, 'ansible')
 CERTS_DIR = os.path.join(DATA_DIR, 'certs')
 
 # Quick-start development settings - unsuitable for production
@@ -303,6 +302,11 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
+
 STATIC_URL = '{}/static/'.format(CONFIG.FORCE_SCRIPT_NAME)
 STATIC_ROOT = os.path.join(PROJECT_DIR, "data", "static")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -319,6 +323,7 @@ PRIVATE_STORAGE_ROOT = MEDIA_ROOT
 PRIVATE_STORAGE_AUTH_FUNCTION = 'jumpserver.rewriting.storage.permissions.allow_access'
 PRIVATE_STORAGE_INTERNAL_URL = '/private-media/'
 PRIVATE_STORAGE_SERVER = 'jumpserver.rewriting.storage.servers.StaticFileServer'
+
 
 # Use django-bootstrap-form to format template, input max width arg
 # BOOTSTRAP_COLUMN_COUNT = 11

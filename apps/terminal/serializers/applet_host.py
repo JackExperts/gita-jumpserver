@@ -15,7 +15,7 @@ from ..models import AppletHost, AppletHostDeployment
 __all__ = [
     'AppletHostSerializer', 'AppletHostDeploymentSerializer',
     'AppletHostAccountSerializer', 'AppletHostAppletReportSerializer',
-    'AppletHostStartupSerializer', 'AppletSetupSerializer'
+    'AppletHostStartupSerializer'
 ]
 
 
@@ -134,7 +134,6 @@ class HostAppletSerializer(AppletSerializer):
 
 class AppletHostDeploymentSerializer(serializers.ModelSerializer):
     status = LabeledChoiceField(choices=Status.choices, label=_('Status'), default=Status.pending)
-    install_applets = serializers.BooleanField(default=True, label=_('Install applets'), write_only=True)
 
     class Meta:
         model = AppletHostDeployment
@@ -143,8 +142,7 @@ class AppletHostDeploymentSerializer(serializers.ModelSerializer):
             'status', 'date_created', 'date_updated',
             'date_start', 'date_finished'
         ]
-        write_only_fields = ['install_applets', ]
-        fields = fields_mini + ['comment'] + read_only_fields + write_only_fields
+        fields = fields_mini + ['comment'] + read_only_fields
 
 
 class AppletHostAccountSerializer(serializers.ModelSerializer):
@@ -161,8 +159,3 @@ class AppletHostAppletReportSerializer(serializers.Serializer):
 
 class AppletHostStartupSerializer(serializers.Serializer):
     pass
-
-
-class AppletSetupSerializer(serializers.Serializer):
-    hosts = serializers.ListField(child=serializers.UUIDField(label=_('Host ID')), label=_('Hosts'))
-    applet_id = serializers.UUIDField(label=_('Applet ID'))

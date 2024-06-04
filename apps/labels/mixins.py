@@ -1,5 +1,4 @@
 from django.contrib.contenttypes.fields import GenericRelation
-from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import OneToOneField, Count
 
@@ -39,11 +38,8 @@ class LabeledMixin(models.Model):
         self.real.labels.set(value, bulk=False)
 
     @classmethod
-    def filter_resources_by_labels(cls, resources, label_ids, rel='all'):
-        if rel == 'all':
-            return cls._get_filter_res_by_labels_m2m_all(resources, label_ids)
-        else:
-            return cls._get_filter_res_by_labels_m2m_in(resources, label_ids)
+    def filter_resources_by_labels(cls, resources, label_ids):
+        return cls._get_filter_res_by_labels_m2m_all(resources, label_ids)
 
     @classmethod
     def _get_filter_res_by_labels_m2m_in(cls, resources, label_ids):
@@ -64,8 +60,7 @@ class LabeledMixin(models.Model):
 
     @classmethod
     def get_labels_filter_attr_q(cls, value, match):
-        res_type = ContentType.objects.get_for_model(cls.label_model())
-        resources = LabeledResource.objects.all().filter(res_type=res_type)
+        resources = LabeledResource.objects.all()
         if not value:
             return None
 

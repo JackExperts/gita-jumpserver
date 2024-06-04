@@ -25,22 +25,14 @@ class PingManager(BasePlaybookManager):
 
     def on_host_success(self, host, result):
         asset, account = self.host_asset_and_account_mapper.get(host)
-        try:
-            asset.set_connectivity(Connectivity.OK)
-            if not account:
-                return
-            account.set_connectivity(Connectivity.OK)
-        except Exception as e:
-            print(f'\033[31m Update account {account.name} or '
-                  f'update asset {asset.name} connectivity failed: {e} \033[0m\n')
+        asset.set_connectivity(Connectivity.OK)
+        if not account:
+            return
+        account.set_connectivity(Connectivity.OK)
 
     def on_host_error(self, host, error, result):
         asset, account = self.host_asset_and_account_mapper.get(host)
-        try:
-            asset.set_connectivity(Connectivity.ERR)
-            if not account:
-                return
-            account.set_connectivity(Connectivity.ERR)
-        except Exception as e:
-            print(f'\033[31m Update account {account.name} or '
-                  f'update asset {asset.name} connectivity failed: {e} \033[0m\n')
+        asset.set_connectivity(Connectivity.ERR)
+        if not account:
+            return
+        account.set_connectivity(Connectivity.ERR)

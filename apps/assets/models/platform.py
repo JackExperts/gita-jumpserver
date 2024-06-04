@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from assets.const import AllTypes, Category, Protocol
+from assets.const import AllTypes
+from assets.const import Protocol
 from common.db.fields import JsonDictTextField
 from common.db.models import JMSBaseModel
 
@@ -117,15 +118,6 @@ class Platform(LabeledMixin, JMSBaseModel):
             defaults={'name': 'Linux'}, name='Linux'
         )
         return linux.id
-
-    def is_huawei(self):
-        if self.category != Category.DEVICE:
-            return False
-        if 'huawei' in self.name.lower():
-            return True
-        if '华为' in self.name:
-            return True
-        return False
 
     def __str__(self):
         return self.name

@@ -21,7 +21,6 @@ class AssetPlatformViewSet(JMSModelViewSet):
     }
     filterset_fields = ['name', 'category', 'type']
     search_fields = ['name']
-    ordering = ['-internal', 'name']
     rbac_perms = {
         'categories': 'assets.view_platform',
         'type_constraints': 'assets.view_platform',

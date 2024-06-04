@@ -11,3 +11,4 @@ i18n:
     zh: 使用 Ansible 模块 mysql 执行 MySQL 账号推送
     ja: Ansible mysql モジュールを使用してアカウントをプッシュする
     en: Using Ansible module mysql to push account
+    pt: Usando o módulo mysql do Ansible para enviar contas

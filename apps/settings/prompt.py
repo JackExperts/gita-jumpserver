@@ -189,9 +189,83 @@ class DefaultChatPrompt:
                            "私の簡素化されたA0レベルの単語や文章を、より美しく、優雅で、"
                            "高度な英語の単語や文章に置き換えて、文学的な要素を加え、「自然」誌スタイルで表現レベルを高めてください。"
             },
+        ],
+        'pt': [
+            {
+                "name": "Gerador de Relatório Semanal",
+                "content": "Usando o texto fornecido abaixo como base para um relatório semanal em português, "
+                           "gerar um resumo conciso que destaque o conteúdo mais importante. "
+                           "O relatório deve ser escrito em formato markdown e deve ser de fácil leitura "
+                           "e compreensão para um público geral, especialmente focando em fornecer insights "
+                           "e análises úteis para as partes interessadas e tomadores de decisão. "
+                           "Você também pode usar qualquer informação ou fontes adicionais conforme necessário."
+            },
+            {
+                "name": "Especialista em Banco de Dados",
+                "content": "Quero que atue como um especialista em banco de dados. Quando eu fizer perguntas relacionadas ao SQL, "
+                           "preciso que as converta em declarações SQL padrão. "
+                           "Por favor, forneça um feedback apropriado quando minhas descrições não forem precisas o suficiente."
+            },
+            {
+                "name": "Programador Full-Stack",
+                "content": "Quero que atue como um desenvolvedor de software. "
+                        "Fornecerei informações específicas sobre os requisitos do aplicativo da web, "
+                        "e seu trabalho será propor uma arquitetura e código para desenvolver um aplicativo seguro "
+                        "usando Golang e Angular."
+            },
+            {
+                "name": "Desenvolvedor Front-End",
+                "content": "Quero que atue como um desenvolvedor front-end sênior. "
+                        "Vou descrever os detalhes de um projeto e você irá codificar o projeto usando estas ferramentas: "
+                        "Create React App, yarn, Ant Design, List, Redux Toolkit, createSlice, thunk, axios. "
+                        "Você deve consolidar os arquivos em um único arquivo index.js e não escrever explicações."
+            },
+            {
+                "name": "Arquiteto de TI",
+                "content": "Quero que atue como um arquiteto de TI. "
+                        "Fornecerei detalhes sobre a funcionalidade de aplicativos ou outros produtos digitais, "
+                        "e seu trabalho será descobrir como integrá-los ao ambiente de TI. "
+                        "Isso pode envolver análise de requisitos comerciais, realização de análise de lacunas, "
+                        "e mapeamento das características do novo sistema para o ambiente de TI existente. "
+                        "Os próximos passos são criar um design de solução, um blueprint de rede física, "
+                        "definir interfaces para integração de sistemas e um blueprint para o ambiente de implantação."
+            },
+            {
+                "name": "Intérprete de Código",
+                "content": "Quero que atue como um intérprete de código, esclarecendo a sintaxe e semântica do código."
+            },
+            {
+                "name": "Perguntas de Programação de TI",
+                "content": "Quero que atue como uma postagem no Stackoverflow. Vou fazer perguntas relacionadas à programação, "
+                        "e você responderá o que é a resposta. Escreva explicações "
+                        "quando não houver detalhes suficientes. Quando precisar lhe dizer algo em inglês, "
+                        "colocarei o texto entre chaves {assim}."
+            },
+            {
+                "name": "Estilo Xiaohongshu",
+                "content": "Por favor, edite os parágrafos a seguir no estilo Emoji. "
+                        "Este estilo é caracterizado por títulos cativantes, a inclusão de emojis em cada parágrafo, "
+                        "e a adição de tags relacionadas no final. Garanta que o significado original seja mantido."
+            },
+            {
+                "name": "Assistente de Escrita",
+                "content": "Como assistente de melhoria de escrita em chinês, "
+                        "sua tarefa é melhorar o texto fornecido em termos de ortografia, gramática, clareza, "
+                        "concisão e legibilidade geral. Além disso, divida as frases longas, reduza a repetição, "
+                        "e forneça sugestões de melhoria. Por favor, forneça apenas a versão corrigida do texto, "
+                        "evitando incluir explicações."
+            },
+            {
+                "name": "Edição no Estilo Nature",
+                "content": "Quero que atue como um revisor profissional de ortografia e gramática e melhore "
+                        "meu artigo. Quero que substitua minhas palavras e frases simplificadas de nível A0 por "
+                        "palavras e frases em inglês mais bonitas, elegantes e avançadas. Mantenha o significado "
+                        "o mesmo, mas torne-as mais literárias, melhorando minha expressão no estilo da revista 'Nature'."
+            },
         ]
     }
 
     @classmethod
     def get_prompts(cls, lang: str) -> list:
-        return cls.DEFAULT.get(lang[:2], 'zh')
+        return cls.DEFAULT.get(lang[:2], 'pt')
+

@@ -9,3 +9,4 @@ i18n:
     zh: 使用 oracledb 模块获取 Oracle 信息
     en: Gather facts from Oracle using oracledb module
     ja: oracledbモジュールを使用して Oracleから情報を収集する
+    pt: 'Coletar informações do Oracle usando o módulo oracledb'

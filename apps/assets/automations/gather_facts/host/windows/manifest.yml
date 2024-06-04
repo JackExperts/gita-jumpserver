@@ -10,3 +10,4 @@ i18n:
     zh: '使用 Ansible 指令 gather_facts 从 Windows 获取设备信息'
     en: 'Gather facts from Windows using gather_facts'
     ja: 'gather_factsを使用してWindowsから情報を収集する'
+    pt: 'Coletar informações do Windows usando gather_facts'

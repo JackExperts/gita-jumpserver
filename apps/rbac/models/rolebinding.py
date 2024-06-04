@@ -56,7 +56,6 @@ class RoleBinding(JMSBaseModel):
         on_delete=models.CASCADE, verbose_name=_('Organization')
     )
     objects = RoleBindingManager()
-    objects_raw = models.Manager()
 
     class Meta:
         verbose_name = _('Role binding')
@@ -153,15 +152,13 @@ class RoleBinding(JMSBaseModel):
         orgs = cls.orgs_order_by_name(orgs)
         workbench_perm = 'rbac.view_workbench'
         # 全局组织
-        has_root_org = False
-        root_org = Organization.root()
         if orgs and perm != workbench_perm and user.has_perm('orgs.view_rootorg'):
-            has_root_org = True
+            root_org = Organization.root()
+            orgs = [root_org, *list(orgs)]
         elif orgs and perm == workbench_perm and user.has_perm('orgs.view_alljoinedorg'):
-            root_org.name = _('All organizations')
-            has_root_org = True
-
-        if has_root_org and system_bindings:
+            # Todo: 先复用组织
+            root_org = Organization.root()
+            root_org.name = _("All organizations")
             orgs = [root_org, *list(orgs)]
         return orgs
 

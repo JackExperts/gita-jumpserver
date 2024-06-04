@@ -1,14 +1,13 @@
-from django.template.loader import render_to_string
-from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext
+from django.template.loader import render_to_string
 
-from notifications.backends import BACKEND
-from notifications.models import SystemMsgSubscription
 from notifications.notifications import SystemMessage
-from terminal.const import TerminalType
-from terminal.models import Terminal
-from terminal.models.component.status import Status
+from notifications.models import SystemMsgSubscription
 from users.models import User
+from notifications.backends import BACKEND
+from terminal.models.component.status import Status
+from terminal.models import Terminal
 
 __all__ = ('ServerPerformanceMessage', 'ServerPerformanceCheckUtil')
 
@@ -134,9 +133,7 @@ class ServerPerformanceCheckUtil(object):
 
     def initial_terminals(self):
         terminals = []
-        for terminal in Terminal.objects.filter(is_deleted=False).exclude(
-                type__in=[TerminalType.core, TerminalType.celery]
-        ):
+        for terminal in Terminal.objects.filter(is_deleted=False):
             if not terminal.is_active:
                 continue
             terminal.stat = Status.get_terminal_latest_stat(terminal)

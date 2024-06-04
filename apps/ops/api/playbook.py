@@ -52,26 +52,27 @@ class PlaybookViewSet(OrgBulkModelViewSet):
         if 'multipart/form-data' in self.request.headers['Content-Type']:
             src_path = safe_join(settings.MEDIA_ROOT, instance.path.name)
             dest_path = safe_join(settings.DATA_DIR, "ops", "playbook", instance.id.__str__())
-
             try:
                 unzip_playbook(src_path, dest_path)
-            except RuntimeError:
+            except RuntimeError as e:
                 raise JMSException(code='invalid_playbook_file', detail={"msg": "Unzip failed"})
 
             if 'main.yml' not in os.listdir(dest_path):
                 raise PlaybookNoValidEntry
 
-        elif instance.create_method == 'blank':
-            dest_path = safe_join(settings.DATA_DIR, "ops", "playbook", instance.id.__str__())
-            os.makedirs(dest_path)
-            with open(safe_join(dest_path, 'main.yml'), 'w') as f:
-                f.write('## write your playbook here')
+        else:
+            if instance.create_method == 'blank':
+                dest_path = safe_join(settings.DATA_DIR, "ops", "playbook", instance.id.__str__())
+                os.makedirs(dest_path)
+                with open(safe_join(dest_path, 'main.yml'), 'w') as f:
+                    f.write('## write your playbook here')
 
 
 class PlaybookFileBrowserAPIView(APIView):
+    rbac_perms = ()
     permission_classes = (RBACPermission,)
     rbac_perms = {
-        'GET': 'ops.view_playbook',
+        'GET': 'ops.change_playbook',
         'POST': 'ops.change_playbook',
         'DELETE': 'ops.change_playbook',
         'PATCH': 'ops.change_playbook',

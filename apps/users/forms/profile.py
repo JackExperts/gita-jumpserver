@@ -7,6 +7,7 @@ from common.utils import validate_ssh_public_key
 from authentication.forms import EncryptedField, CaptchaMixin
 from ..models import User
 
+
 __all__ = [
     'UserProfileForm', 'UserMFAForm', 'UserFirstLoginFinishForm',
     'UserPasswordForm', 'UserPublicKeyForm', 'FileForm',
@@ -44,6 +45,7 @@ UserProfileForm.verbose_name = _("Profile")
 
 
 class UserMFAForm(forms.ModelForm):
+
     mfa_description = _(
         'When enabled, '
         'you will enter the MFA binding process the next time you log in. '
@@ -79,12 +81,12 @@ class UserTokenResetPasswordForm(forms.Form):
     new_password = EncryptedField(
         min_length=5, max_length=128,
         widget=forms.PasswordInput,
-        label=_("New password")
+        label=_("Nova Senha")
     )
     confirm_password = EncryptedField(
         min_length=5, max_length=128,
         widget=forms.PasswordInput,
-        label=_("Confirm password")
+        label=_("Confirmar Senha")
     )
 
     def clean_confirm_password(self):
@@ -92,18 +94,17 @@ class UserTokenResetPasswordForm(forms.Form):
         confirm_password = self.cleaned_data['confirm_password']
 
         if new_password != confirm_password:
-            raise forms.ValidationError(_('Password does not match'))
+            raise forms.ValidationError(_('As senhas não correspondem'))
         return confirm_password
 
 
 class UserForgotPasswordForm(forms.Form):
     email = forms.CharField(label=_("Email"), required=False)
-    country_code = forms.CharField(required=False)
     sms = forms.CharField(
         label=_('SMS'), required=False,
-        help_text=_('The phone number must contain an area code, for example, +86')
+        help_text=_('O número de telefone deve conter um código de área, por exemplo, +55')
     )
-    code = forms.CharField(label=_('Verify code'), max_length=6, required=False)
+    code = forms.CharField(label=_('Verificar código'), max_length=6, required=False)
     form_type = forms.ChoiceField(
         choices=[('sms', _('SMS')), ('email', _('Email'))],
         widget=forms.HiddenInput({'value': 'email'})
@@ -111,13 +112,13 @@ class UserForgotPasswordForm(forms.Form):
 
 
 class UserForgotPasswordPreviewingForm(CaptchaMixin):
-    username = forms.CharField(label=_("Username"))
+    username = forms.CharField(label=_("Nome de Usuário"))
 
 
 class UserPasswordForm(UserTokenResetPasswordForm):
     old_password = EncryptedField(
         max_length=128, widget=forms.PasswordInput,
-        label=_("Old password")
+        label=_("Senha Antiga")
     )
 
     def __init__(self, *args, **kwargs):

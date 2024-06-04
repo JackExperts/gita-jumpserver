@@ -75,13 +75,13 @@ class ChatAISettingSerializer(serializers.Serializer):
         required=False, label=_('Enable Chat AI')
     )
     GPT_BASE_URL = serializers.CharField(
-        allow_blank=True, required=False, label=_('Base Url')
+        max_length=256, allow_blank=True, required=False, label=_('Base Url')
     )
     GPT_API_KEY = EncryptedField(
-        allow_blank=True, required=False, label=_('API Key'),
+        max_length=256, allow_blank=True, required=False, label=_('API Key'),
     )
     GPT_PROXY = serializers.CharField(
-        allow_blank=True, required=False, label=_('Proxy')
+        max_length=256, allow_blank=True, required=False, label=_('Proxy')
     )
     GPT_MODEL = serializers.ChoiceField(
         default='', choices=GPT_MODEL_CHOICES, label=_("GPT Model"), required=False,

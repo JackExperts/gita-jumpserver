@@ -13,14 +13,10 @@
     {% include '_head_css_js.html' %}
     <!-- Stylesheets -->
     <link href="{% static 'css/login-style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/jumpserver.css' %}" rel="stylesheet">
-    <script src="{% static "js/jumpserver.js" %}?_=9"></script>
-
+    <link href="{% static 'css/jumpserver.css' %}"rel="stylesheet" >
+    <script src="{% static 'js/jumpserver.js' %}?_=9"></script>
+    
     <style>
-        .login-content {
-        {#box-shadow: 0 5px 5px -3px rgb(0 0 0 / 15%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);#}
-        }
-
         .login-footer {
             height: 50px;
             width: 1000px;
@@ -74,10 +70,11 @@
             margin-right: auto;
             margin-left: auto;
             margin-top: calc((100vh - 470px) / 3);
+            background-color: #fbbf24;
         }
 
         body {
-            background-color: #f3f3f3;
+            background-color: #141416;
             height: calc(100vh - (100vh - 470px) / 3);
         }
 
@@ -86,17 +83,18 @@
         }
 
         .right-image-box {
-            height: 100%;
-            width: 50%;
+            height: 25%;
+            width: 25%;
             float: right;
+            background-color: #fbbf24;
         }
 
         .left-form-box {
             text-align: center;
-            background-color: white;
+            background-color: #1a1a1c;
             height: 100%;
             width: 50%;
-            border-right: 1px solid #EFF0F1;
+            border: 1px solid #2d2d31;
         }
 
         .red-fonts {
@@ -208,6 +206,7 @@
         .navbar-right .dropdown-menu {
             right: -24px !important;
             left: auto;
+            background-color: #27272a;
         }
 
         .auto_login_box {
@@ -235,7 +234,7 @@
 
         @media (max-width: 768px) {
             body {
-                background-color: #ffffff;
+                background-color: #141416;
             }
 
             .login-content {
@@ -267,6 +266,27 @@
                 width: revert;
             }
         }
+        .btn-login {
+            background-color: #fbbf24;
+            width: 50%;
+            color: #000;
+            margin: 0%;
+            border: #000;
+        }
+        .btn-login:hover{
+            background-color: #d2a227;
+            color: #000;
+            border: #000;
+        }
+        .btn-login:active{
+            background-color: #d2a227;
+            color: #000;
+            border: #000;
+        }
+        .form-control {
+            background-color: #27272a;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -287,7 +307,7 @@
     <div class="left-form-box {% if not form.challenge and not form.captcha %} no-captcha-challenge {% endif %}">
         <div class="mobile-logo">
 	        <div class="jms-title">
-		        <span style="">{{ INTERFACE.login_title }}</span>
+		        <span >{{ INTERFACE.login_title }}</span>
             </div>
         </div>
         <div style="position: relative;top: 50%;transform: translateY(-50%);">
@@ -357,15 +377,15 @@
                             </div>
 
                             <div class="col-md-6 col-xs-6" style="line-height: 25px">
-                                <a id="forgot_password" href="{{ forgot_password_url }}" style="float: right">
-                                    <small>{% trans 'Forgot password' %}?</small>
+                                <a id="forgot_password" href="{{ forgot_password_url }}" style="float: right; color: #fbbf24;">
+                                    <small>{% trans 'Esqueci minha senha' %}</small>
                                 </a>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-transparent" onclick="doLogin();return false;">
+                        <button type="submit" class="btn btn-login" onclick="doLogin();return false;">
                             {% trans 'Login' %}
                         </button>
                     </div>
@@ -373,7 +393,7 @@
                     <div class="more-login">
                         {% if auth_methods %}
                             <div class="more-methods-title {{ current_lang.code }}">
-                                    {% trans "More login options" %}
+                                    {% trans "Mais opções de login" %}
                             </div>
                             <div class="more-login-items">
                             {% for method in auth_methods %}

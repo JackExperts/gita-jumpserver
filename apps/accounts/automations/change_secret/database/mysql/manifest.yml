@@ -11,3 +11,4 @@ i18n:
     zh: 使用 Ansible 模块 mysql 执行 MySQL 账号改密
     ja: Ansible mysql モジュールを使用して MySQL アカウントのパスワード変更
     en: Using Ansible module mysql to change MySQL account secret
+    pt: Usando o módulo Ansible mysql para alterar a senha da conta MySQL

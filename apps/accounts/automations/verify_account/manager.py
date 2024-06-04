@@ -76,14 +76,8 @@ class VerifyAccountManager(AccountBasePlaybookManager):
 
     def on_host_success(self, host, result):
         account = self.host_account_mapper.get(host)
-        try:
-            account.set_connectivity(Connectivity.OK)
-        except Exception as e:
-            print(f'\033[31m Update account {account.name} connectivity failed: {e} \033[0m\n')
+        account.set_connectivity(Connectivity.OK)
 
     def on_host_error(self, host, error, result):
         account = self.host_account_mapper.get(host)
-        try:
-            account.set_connectivity(Connectivity.ERR)
-        except Exception as e:
-            print(f'\033[31m Update account {account.name} connectivity failed: {e} \033[0m\n')
+        account.set_connectivity(Connectivity.ERR)

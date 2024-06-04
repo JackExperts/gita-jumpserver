@@ -11,3 +11,4 @@ i18n:
     zh: 使用 Ansible 模块 ping 来测试可连接性
     en: Use Ansible builtin module ping to test Posix
     ja: Ansible 組み込みモジュール ping を使用してテストする Posix
+    pt: 'Testar a conectividade Posix usando o módulo integrado ping do Ansible'

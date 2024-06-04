@@ -9,11 +9,13 @@
     <link rel="shortcut icon" href="{{ INTERFACE.favicon }}" type="image/x-icon">
     <title>{{ title }}</title>
     {% include '_head_css_js.html' %}
-    <link href="{% static "css/jumpserver.css" %}" rel="stylesheet">
-    <script src="{% static "js/jumpserver.js" %}?_=9"></script>
+    <link href="{% static 'css/jumpserver.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jumpserver.js' %}?_=9"></script>
 
 </head>
-
+<style>
+    
+</style>
 <body class="gray-bg">
 <div class="passwordBox2 animated fadeInDown">
     <div class="row">
@@ -72,7 +74,7 @@ var infoMsgRef = $(".info-messages");
 var timestamp = '{{ timestamp }}';
 var progressBarRef = $(".progress-bar");
 var interval, checkInterval;
-var url = "{% url 'api-auth:login-confirm-ticket-status' %}";
+var url = "{% url 'api-auth:-confirm-ticket-status' %}";
 var successUrl = "{% url 'authentication:login-guard' %}";
 
 function doRequestAuth() {
@@ -95,7 +97,6 @@ function doRequestAuth() {
                 }
                 clearInterval(interval);
                 clearInterval(checkInterval);
-                cancelTicket();
                 $(".copy-btn").attr('disabled', 'disabled');
                 errorMsgRef.html(data.msg)
             }
@@ -114,7 +115,7 @@ function initClipboard() {
         }
     });
     clipboard.on("success", function (e) {
-        toastr.success("{% trans "Copy success" %}")
+        toastr.success("{% trans 'Copy success' %}")
     })
 }
 

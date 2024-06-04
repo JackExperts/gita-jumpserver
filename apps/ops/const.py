@@ -54,7 +54,6 @@ class JobModules(models.TextChoices):
     postgresql = 'postgresql', _('PostgreSQL')
     sqlserver = 'sqlserver', _('SQLServer')
     raw = 'raw', _('Raw')
-    huawei = 'huawei', _('HUAWEI')
 
 
 class AdHocModules(models.TextChoices):

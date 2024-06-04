@@ -137,13 +137,16 @@ class BaseAccount(VaultModelMixin, JMSOrgBaseModel):
         else:
             return None
 
-    def get_private_key_path(self, path):
+    @property
+    def private_key_path(self):
         if self.secret_type != SecretType.SSH_KEY \
                 or not self.secret \
                 or not self.private_key:
             return None
+        project_dir = settings.PROJECT_DIR
+        tmp_dir = os.path.join(project_dir, 'tmp')
         key_name = '.' + md5(self.private_key.encode('utf-8')).hexdigest()
-        key_path = os.path.join(path, key_name)
+        key_path = os.path.join(tmp_dir, key_name)
         if not os.path.exists(key_path):
             # https://github.com/ansible/ansible-runner/issues/544
             # ssh requires OpenSSH format keys to have a full ending newline.
@@ -154,12 +157,6 @@ class BaseAccount(VaultModelMixin, JMSOrgBaseModel):
                     f.write("\n")
             os.chmod(key_path, 0o400)
         return key_path
-
-    @property
-    def private_key_path(self):
-        project_dir = settings.PROJECT_DIR
-        tmp_dir = os.path.join(project_dir, 'tmp')
-        return self.get_private_key_path(tmp_dir)
 
     def get_private_key(self):
         if not self.private_key:

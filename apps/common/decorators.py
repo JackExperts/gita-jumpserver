@@ -12,7 +12,6 @@ from functools import wraps
 from django.db import transaction
 
 from .utils import logger
-from .db.utils import open_db_connection
 
 
 def on_transaction_commit(func):
@@ -147,9 +146,7 @@ ignore_err_exceptions = (
 def _run_func_with_org(key, org, func, *args, **kwargs):
     from orgs.utils import set_current_org
     try:
-        with open_db_connection() as conn:
-            # 保证执行时使用的是新的 connection 数据库连接
-            # 避免出现 MySQL server has gone away 的情况
+        with transaction.atomic():
             set_current_org(org)
             func(*args, **kwargs)
     except Exception as e:
@@ -204,8 +201,6 @@ def merge_delay_run(ttl=5, key=None):
 
     def delay(func, *args, **kwargs):
         from orgs.utils import get_current_org
-        # 每次调用 delay 时可以指定本次调用的 ttl
-        current_ttl = kwargs.pop('ttl', ttl)
         suffix_key_func = key if key else default_suffix_key
         org = get_current_org()
         func_name = f'{func.__module__}_{func.__name__}'
@@ -222,7 +217,7 @@ def merge_delay_run(ttl=5, key=None):
             else:
                 cache_kwargs[k] = cache_kwargs[k].union(v)
         _loop_debouncer_func_args_cache[cache_key] = cache_kwargs
-        run_debouncer_func(cache_key, org, current_ttl, func, *args, **cache_kwargs)
+        run_debouncer_func(cache_key, org, ttl, func, *args, **cache_kwargs)
 
     def apply(func, sync=False, *args, **kwargs):
         if sync:

@@ -115,7 +115,7 @@ form label {
 }
 
 .form-control {
-    color: #2B415C;
+    color: #fff;
     background-color: #FFF;
     border: 1px solid #8B9EB6;
     border-radius: 2px;
@@ -134,7 +134,7 @@ form label {
 }
 
 .form-control:focus {
-    color: #2B415C;
+    color: #fff;
     background-color: #F6F9Fd;
     border-color: #2EA2F8;
     outline: 0;
@@ -173,7 +173,7 @@ form label {
 }
 
 .input-group-addon {
-    color: #2B415C;
+    color: #fff;
     background-color: #FBFCFD;
     border: 1px solid #8B9EB6;
 }

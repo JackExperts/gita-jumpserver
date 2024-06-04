@@ -19,8 +19,6 @@ if [[ "$action" == "bash" || "$action" == "sh" ]];then
 elif [[ "$action" == "sleep" ]];then
     echo "Sleep 365 days"
     sleep 365d
-elif [[ "$service" == "receptor" ]];then
-    python receptor "$action"
 else
-    python jms "$action" "$service"
+    python jms "${action}" "${service}"
 fi

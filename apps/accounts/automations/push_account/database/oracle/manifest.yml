@@ -10,3 +10,4 @@ i18n:
     zh: 使用 Python 模块 oracledb 执行 Oracle 账号推送
     ja: Python oracledb モジュールを使用してアカウントをプッシュする
     en: Using Python module oracledb to push account
+    pt: Usando o módulo Python oracledb para enviar contas Oracle

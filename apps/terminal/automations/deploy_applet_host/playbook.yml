@@ -15,7 +15,6 @@
     RDS_MaxDisconnectionTime: 60000
     RDS_RemoteAppLogoffTimeLimit: 0
     TinkerInstaller: Tinker_Installer.exe
-    INSTALL_APPLETS: true
 
   tasks:
     - name: Install RDS-RD-Server (RDS)
@@ -274,4 +273,3 @@
       ansible.windows.win_powershell:
         script: |
           tinkerd install all
-      when: INSTALL_APPLETS

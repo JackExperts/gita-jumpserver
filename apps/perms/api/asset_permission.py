@@ -20,3 +20,4 @@ class AssetPermissionViewSet(OrgBulkModelViewSet):
     }
     filterset_class = AssetPermissionFilter
     search_fields = ('name',)
+    ordering = ('name',)

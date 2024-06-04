@@ -88,7 +88,8 @@ class KubernetesClient:
             try:
                 data = getattr(self, func_name)(*args)
             except Exception as e:
-                logger.error(f'K8S tree get {tp} error: {e}')
+                logger.error(e)
+                raise e
 
         if self.server:
             self.server.stop()
