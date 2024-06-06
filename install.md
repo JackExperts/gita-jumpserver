@@ -82,7 +82,7 @@
 10. **Inicie o JumpServer no localhost:8080:**
 
     ```bash
-    mkdir -p /opt/jumpserver-v3.10.9/tmp
+    mkdir -p /opt/gita-jumpserver/tmp
     poetry run ./jms start
     ```
 
