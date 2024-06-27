@@ -6,8 +6,7 @@ ENV VERSION=$VERSION
 
 WORKDIR /opt/jumpserver
 ADD . .
-RUN echo > /opt/jumpserver/config.yml \
-    && cd utils && bash -ixeu build.sh
+RUN cd utils && bash -ixeu build.sh
 
 FROM python:3.11-slim-bullseye as stage-2
 ARG TARGETARCH
@@ -66,7 +65,8 @@ RUN --mount=type=cache,target=/root/.cache \
     && pip install poetry -i ${PIP_MIRROR} \
     && poetry config virtualenvs.create false \
     && . /opt/py3/bin/activate \
-    && poetry install
+    && poetry install \
+    && find . -name '*.pyc' -delete
 
 FROM python:3.11-slim-bullseye
 ARG TARGETARCH
@@ -109,7 +109,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=core-apt \
     && echo "no" | dpkg-reconfigure dash \
     && echo "zh_CN.UTF-8" | dpkg-reconfigure locales \
     && sed -i "s@# export @export @g" ~/.bashrc \
-    && sed -i "s@# alias @alias @g" ~/.bashrc
+    && sed -i "s@# alias @alias @g" ~/.bashrc \
+    && find . -name '*.pyc' -delete
 
 COPY --from=stage-2 /opt/py3 /opt/py3
 COPY --from=stage-1 /opt/jumpserver/release/jumpserver /opt/jumpserver
