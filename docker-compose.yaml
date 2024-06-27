@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - /opt/redis-data:/data
+
+  mysql:
+    image: mysql:8.0.36
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: jumpserver
+      MYSQL_USER: jumpserver
+      MYSQL_PASSWORD: Wo6ri8je
+    ports:
+      - "3306:3306"
+    volumes:
+      - /opt/mysql-data:/var/lib/mysql
+
+  jumpserver:
+    image: gita-jumpserver:0.0.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - /opt/jumpserver/data:/opt/jumpserver/data

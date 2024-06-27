@@ -35,7 +35,7 @@ DB_ENGINE: mysql
 DB_HOST: 127.0.0.1
 DB_PORT: 3306
 DB_USER: jumpserver
-DB_PASSWORD:
+DB_PASSWORD: 
 DB_NAME: jumpserver
 
 # When Django start it will bind this host and port

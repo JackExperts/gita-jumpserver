@@ -32,7 +32,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE: true
 # MySQL or postgres setting like:
 # 使用Mysql作为数据库
 DB_ENGINE: mysql
-DB_HOST: 127.0.0.1
+DB_HOST: mysql
 DB_PORT: 3306
 DB_USER: jumpserver
 DB_PASSWORD: Wo6ri8je
@@ -47,7 +47,7 @@ WS_LISTEN_PORT: 8070
 
 # Use Redis as broker for celery and web socket
 # Redis配置
-REDIS_HOST: 127.0.0.1
+REDIS_HOST: redis
 REDIS_PORT: 6379
 # REDIS_PASSWORD: Wo6ri8je
 # REDIS_DB_CELERY: 3
